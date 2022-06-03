@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,37 @@ public class TodoController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Todo> getAllTodos() {
-
-        return todoService.listTodos().orElseThrow();
+        return todoService.listTodos().get();
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void createTodo(@RequestBody Todo todo){
         todoService.createTodo(todo);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Todo getTodo(@PathVariable String id) {
+        return todoService.getTodo(id).get();
+    }
+
+    @PutMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public void editTodo(@RequestBody Todo todo) {
+        todoService.editTodo(todo);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTodo(@PathVariable String id){
+        todoService.delete(id);
+    }
+
+    @PutMapping("/next")
+    @ResponseStatus(HttpStatus.OK)
+    public void changeStatus(@RequestBody Todo todo){
+        todoService.changeStatus(todo);
     }
 
 }

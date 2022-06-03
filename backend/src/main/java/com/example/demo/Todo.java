@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Todo {
     private final String id = UUID.randomUUID().toString();
-    private final String status = "OPEN";
+    private String status;
     private String task;
     private String description;
 }

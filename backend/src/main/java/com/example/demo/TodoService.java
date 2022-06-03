@@ -3,7 +3,7 @@ package com.example.demo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,14 +16,33 @@ public class TodoService {
     public void createTodo(Todo todo){
         todoRepo.create(todo);
     }
+
+    public void editTodo(Todo todo){
+        todoRepo.edit(todo);
+    }
+
+    public void delete(String id){
+        todoRepo.delete(id);
+    }
+
     public Optional<List<Todo>> listTodos(){
         return todoRepo.list();
     }
 
-    /*
-    public void changeStatus(String status){
-        todoRepo.changeStatus(status);
+    public Optional<Todo> getTodo(String id){
+        return todoRepo.get(id);
     }
-    */
+
+    public void changeStatus(Todo todo) {
+        if(todo.getStatus().equals("OPEN")) {
+            todo.setStatus("IN_PROGRESS");
+            todoRepo.edit(todo);
+        } else if(todo.getStatus().equals("IN_PROGRESS")) {
+            todo.setStatus("DONE");
+            todoRepo.edit(todo);
+        } else if(todo.getStatus().equals("DONE")) {
+            todoRepo.delete(todo.getId());
+        };
+    }
 
 }
