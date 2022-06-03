@@ -18,7 +18,7 @@ class TodoControllerIT {
 
     @Test
     void shouldAddTodo(){
-        Todo todo = new Todo("Wäsche waschen", "Kleidung säubern", "IN_PROGRESS");
+        Todo todo = new Todo(TodoStatus.IN_PROGRESS, "Wäsche waschen", "Kleidung säubern");
         ResponseEntity<Void> responseEntity = restTemplate.postForEntity("/api/kanban", todo, Void.class);
 
         Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -26,7 +26,7 @@ class TodoControllerIT {
 
     @Test
     void shouldAddAndRemoveTodo(){
-        Todo todo = new Todo("Wäsche waschen", "Kleidung säubern", "OPEN");
+        Todo todo = new Todo(TodoStatus.OPEN, "Wäsche waschen", "Kleidung säubern");
         restTemplate.postForEntity("/api/kanban", todo, Void.class);
         restTemplate.delete("/api/kanban/" + todo.getId(), Void.class);
 
@@ -37,7 +37,7 @@ class TodoControllerIT {
 
     @Test
     void shouldAddAndNotRemoveTodo(){
-        Todo todo = new Todo("Wäsche waschen", "Kleidung säubern", "OPEN");
+        Todo todo = new Todo(TodoStatus.OPEN, "Wäsche waschen", "Kleidung säubern" );
         restTemplate.postForEntity("/api/kanban", todo, Void.class);
         restTemplate.delete("/api/kanban/" + "123", Void.class);
 

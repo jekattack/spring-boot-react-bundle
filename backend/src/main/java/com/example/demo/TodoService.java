@@ -33,16 +33,13 @@ public class TodoService {
         return todoRepo.get(id);
     }
 
-    public void changeStatus(Todo todo) {
-        if(todo.getStatus().equals("OPEN")) {
-            todo.setStatus("IN_PROGRESS");
-            todoRepo.edit(todo);
-        } else if(todo.getStatus().equals("IN_PROGRESS")) {
-            todo.setStatus("DONE");
-            todoRepo.edit(todo);
-        } else if(todo.getStatus().equals("DONE")) {
-            todoRepo.delete(todo.getId());
-        };
+    public void changeNext(Todo todo) {
+        todoRepo.changeNext(todo);
     }
+
+    public void changePrev(Todo todo) {
+        todoRepo.changePrev(todo);
+    }
+
 
 }

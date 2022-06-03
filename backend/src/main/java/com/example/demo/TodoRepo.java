@@ -36,9 +36,15 @@ public class TodoRepo {
         Optional<List<Todo>> listReturn = Optional.of(new ArrayList<>(todos.values()));
         return listReturn;
     }
-/*
-    public void changeStatus(String id, String status) {
-        Todo todo = todos.get(id);
+
+    public void changeNext(Todo todo) {
+        todo.setStatus(todo.getStatus().progressNext());
+        edit(todo);
     }
-    */
+
+    public void changePrev(Todo todo) {
+        todo.setStatus(todo.getStatus().progressPrev());
+        edit(todo);
+    }
+
 }

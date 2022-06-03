@@ -49,8 +49,14 @@ public class TodoController {
 
     @PutMapping("/next")
     @ResponseStatus(HttpStatus.OK)
-    public void changeStatus(@RequestBody Todo todo){
-        todoService.changeStatus(todo);
+    public void changeNext(@RequestBody Todo todo){
+        todoService.changeNext(todo);
+    }
+
+    @PutMapping("/prev")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePrev(@RequestBody Todo todo){
+        todoService.changePrev(todo);
     }
 
 }
