@@ -25,7 +25,7 @@ class TodoControllerTest {
     void shouldReturnGivenTodo(){
         //Given
         Todo todo = new Todo(TodoStatus.IN_PROGRESS, "Wäsche waschen", "Kleidung säubern");
-        when(todoService.getTodo(todo.getId())).thenReturn(Optional.of(todo));
+        when(todoService.getTodo(todo.getId())).thenReturn(todo);
 
         TodoController todoController = new TodoController(todoService);
 

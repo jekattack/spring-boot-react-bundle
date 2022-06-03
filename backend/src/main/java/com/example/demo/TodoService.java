@@ -13,8 +13,17 @@ public class TodoService {
 
     private final TodoRepo todoRepo;
 
+    public List<Todo> listTodos(){
+
+        return todoRepo.list().orElseThrow();
+    }
+
+    public Todo getTodo(String id){
+        return todoRepo.get(id).orElseThrow();
+    }
+
     public void createTodo(Todo todo){
-        todoRepo.create(todo);
+        if (todo.getTask()!=""){todoRepo.create(todo);}
     }
 
     public void editTodo(Todo todo){
@@ -23,14 +32,6 @@ public class TodoService {
 
     public void delete(String id){
         todoRepo.delete(id);
-    }
-
-    public Optional<List<Todo>> listTodos(){
-        return todoRepo.list();
-    }
-
-    public Optional<Todo> getTodo(String id){
-        return todoRepo.get(id);
     }
 
     public void changeNext(Todo todo) {
