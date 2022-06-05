@@ -16,19 +16,13 @@ class TodoControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
-/*
-    @Test
-    void shouldAddTodo(){
-        Todo todo = new Todo(TodoStatus.IN_PROGRESS, "Wäsche waschen", "Kleidung säubern");
-        ResponseEntity<Void> responseEntity = restTemplate.postForEntity("/api/kanban", todo, Void.class);
 
-        Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    }
-*/
     @Test
     void shouldAddAndRemoveTodo(){
         Todo todo = new Todo(TodoStatus.OPEN, "Wäsche waschen", "Kleidung säubern");
         restTemplate.postForEntity("/api/kanban", todo, Void.class);
+
+
         restTemplate.delete("/api/kanban/" + todo.getId(), Void.class);
 
         ResponseEntity<Todo[]> responseEntity1 = restTemplate.getForEntity("/api/kanban", Todo[].class);
@@ -37,13 +31,23 @@ class TodoControllerIT {
     }
 
     @Test
-    void shouldNotAddTodo(){
-        Todo todo = new Todo(TodoStatus.OPEN, "", "" );
-        restTemplate.postForEntity("/api/kanban", todo, Void.class);
+    void shouldTestWholeApp() {
+        //given
+        Todo task1 = new Todo(TodoStatus.OPEN, "Holzhacken","Im Wald");
+        restTemplate.postForEntity("/api/kanban",task1,Void.class);
+        Todo task2 = new Todo(TodoStatus.IN_PROGRESS, "In den Wald fahren","Mit dem Pferdewagen");
+        restTemplate.postForEntity("/api/kanban",task2,Void.class);
 
-        ResponseEntity<Todo[]> responseEntity1 = restTemplate.getForEntity("/api/kanban", Todo[].class);
+        ResponseEntity<Todo[]> getResponse = restTemplate.getForEntity("/api/kanban",Todo[].class);
 
-        Assertions.assertThat(responseEntity1.getBody()).isEmpty();
+        Assertions.assertThat(getResponse.getBody().length).isEqualTo(2);
+        Assertions.assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        restTemplate.put("/api/kanban/next",task1,Void.class);
+        ResponseEntity<Todo> getResponse2 = restTemplate.getForEntity("/api/kanban/" + task1.getId(),Todo.class);
+
+        Assertions.assertThat(getResponse2.getBody().getStatus()).isEqualTo(TodoStatus.IN_PROGRESS);
+
     }
 
 

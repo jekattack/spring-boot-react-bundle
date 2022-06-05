@@ -14,7 +14,6 @@ public class TodoService {
     private final TodoRepo todoRepo;
 
     public List<Todo> listTodos(){
-
         return todoRepo.list().orElseThrow();
     }
 
