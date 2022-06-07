@@ -17,6 +17,7 @@ class TodoControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
+
     @Test
     void shouldAddAndRemoveTodo(){
         Todo todo = new Todo(TodoStatus.OPEN, "Wäsche waschen", "Kleidung säubern");
@@ -29,6 +30,8 @@ class TodoControllerIT {
 
         Assertions.assertThat(responseEntity1.getBody()).isEmpty();
     }
+
+
 
     @Test
     void shouldTestWholeApp() {

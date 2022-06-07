@@ -43,7 +43,7 @@ class TodoServiceTest {
         TodoService testTodoService = new TodoService(testTodoRepo);
 
         //When
-        Mockito.when(testTodoRepo.list()).thenReturn(Optional.of(List.of(testTodo1,testTodo2,testTodo3)));
+        Mockito.when(testTodoRepo.list()).thenReturn(List.of(testTodo1,testTodo2,testTodo3));
 
         //Then
         Assertions.assertThat(testTodoService.listTodos()).contains(testTodo1,testTodo2,testTodo3);

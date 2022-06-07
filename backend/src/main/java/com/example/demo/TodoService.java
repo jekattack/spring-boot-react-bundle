@@ -14,7 +14,7 @@ public class TodoService {
     private final TodoRepo todoRepo;
 
     public List<Todo> listTodos(){
-        return todoRepo.list().orElseThrow();
+        return todoRepo.list();
     }
 
     public Todo getTodo(String id){
@@ -22,7 +22,7 @@ public class TodoService {
     }
 
     public void createTodo(Todo todo){
-        if (todo.getTask()!=""){todoRepo.create(todo);}
+        if (!"".equals(todo.getTask())){todoRepo.create(todo);}
     }
 
     public void editTodo(Todo todo){
@@ -34,11 +34,13 @@ public class TodoService {
     }
 
     public void changeNext(Todo todo) {
-        todoRepo.changeNext(todo);
+        todo.setStatus(todo.getStatus().progressNext());
+        todoRepo.edit(todo);
     }
 
     public void changePrev(Todo todo) {
-        todoRepo.changePrev(todo);
+        todo.setStatus(todo.getStatus().progressPrev());
+        todoRepo.edit(todo);
     }
 
 
