@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/kanban")
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class TodoController {
     public Todo getTodo(@PathVariable String id) {
         return todoService.getTodo(id);
     }
-
+// Testtest
     @PutMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void editTodo(@RequestBody Todo todo) {
