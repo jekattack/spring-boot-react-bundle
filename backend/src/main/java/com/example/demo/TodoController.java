@@ -20,7 +20,7 @@ public class TodoController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Todo> getAllTodos() {
-        return todoService.listTodos().get();
+        return todoService.listTodos();
     }
 
     @PostMapping()
@@ -32,7 +32,7 @@ public class TodoController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Todo getTodo(@PathVariable String id) {
-        return todoService.getTodo(id).get();
+        return todoService.getTodo(id);
     }
 
     @PutMapping()
@@ -49,8 +49,14 @@ public class TodoController {
 
     @PutMapping("/next")
     @ResponseStatus(HttpStatus.OK)
-    public void changeStatus(@RequestBody Todo todo){
-        todoService.changeStatus(todo);
+    public void changeNext(@RequestBody Todo todo){
+        todoService.changeNext(todo);
+    }
+
+    @PutMapping("/prev")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePrev(@RequestBody Todo todo){
+        todoService.changePrev(todo);
     }
 
 }

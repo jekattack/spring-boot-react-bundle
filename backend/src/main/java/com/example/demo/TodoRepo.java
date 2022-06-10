@@ -11,9 +11,6 @@ import java.util.Optional;
 public class TodoRepo {
 
     private HashMap<String, Todo> todos = new HashMap<>();
-    public TodoRepo(List<Todo> todos){
-        for(Todo t : todos) this.todos.putIfAbsent(t.getId(), t);
-    }
 
     public void create(Todo todo){
         todos.putIfAbsent(todo.getId(), todo);
@@ -32,13 +29,10 @@ public class TodoRepo {
     }
 
 
-    public Optional<List<Todo>> list(){
-        Optional<List<Todo>> listReturn = Optional.of(new ArrayList<>(todos.values()));
+    public List<Todo> list(){
+        List<Todo> listReturn = new ArrayList<>(todos.values());
         return listReturn;
     }
-/*
-    public void changeStatus(String id, String status) {
-        Todo todo = todos.get(id);
-    }
-    */
+
+
 }

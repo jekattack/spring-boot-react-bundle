@@ -13,8 +13,16 @@ public class TodoService {
 
     private final TodoRepo todoRepo;
 
+    public List<Todo> listTodos(){
+        return todoRepo.list();
+    }
+
+    public Todo getTodo(String id){
+        return todoRepo.get(id).orElseThrow();
+    }
+
     public void createTodo(Todo todo){
-        todoRepo.create(todo);
+        if (!"".equals(todo.getTask())){todoRepo.create(todo);}
     }
 
     public void editTodo(Todo todo){
@@ -25,24 +33,15 @@ public class TodoService {
         todoRepo.delete(id);
     }
 
-    public Optional<List<Todo>> listTodos(){
-        return todoRepo.list();
+    public void changeNext(Todo todo) {
+        todo.setStatus(todo.getStatus().progressNext());
+        todoRepo.edit(todo);
     }
 
-    public Optional<Todo> getTodo(String id){
-        return todoRepo.get(id);
+    public void changePrev(Todo todo) {
+        todo.setStatus(todo.getStatus().progressPrev());
+        todoRepo.edit(todo);
     }
 
-    public void changeStatus(Todo todo) {
-        if(todo.getStatus().equals("OPEN")) {
-            todo.setStatus("IN_PROGRESS");
-            todoRepo.edit(todo);
-        } else if(todo.getStatus().equals("IN_PROGRESS")) {
-            todo.setStatus("DONE");
-            todoRepo.edit(todo);
-        } else if(todo.getStatus().equals("DONE")) {
-            todoRepo.delete(todo.getId());
-        };
-    }
 
 }
