@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -21,8 +22,12 @@ public class TodoService {
         return todoRepo.get(id).orElseThrow();
     }
 
-    public void createTodo(Todo todo){
-        if (!"".equals(todo.getTask())){todoRepo.create(todo);}
+    public void createTodo(Todo todo) {
+        if (!"".equals(todo.getTask())) {
+            todoRepo.create(todo);
+        } else {
+            throw new Error(String.valueOf(HttpStatus.BAD_REQUEST));
+        }
     }
 
     public void editTodo(Todo todo){
